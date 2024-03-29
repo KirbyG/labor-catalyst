@@ -2,22 +2,32 @@
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useState } from "react";
 import "./globals.css";
+import { Input } from "./input";
+import { Upload } from "./upload";
 
 export default function Home() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [sex, setSex] = useState("");
+  const [areaCode, setAreaCode] = useState("");
+  const [radius, setRadius] = useState("");
   const [desiredYearlySalary, setDesiredYearlySalary] = useState("");
   const [desiredHourlyWage, setDesiredHourlyWage] = useState("");
   const [hoursPerWeek, setHoursPerWeek] = useState("");
   const [skills, setSkills] = useState("");
   const [certifications, setCertifications] = useState("");
   const [resume, setResume] = useState<File | null>(null);
+  const [photo, setPhoto] = useState<File | null>(null);
   // Add additional state variables for the other form fields
 
   function handleResumeUpload(event: ChangeEvent<HTMLInputElement>): void {
     const file = event.target.files?.[0] || null;
     setResume(file);
+  }
+
+  function handlePhotoUpload(event: ChangeEvent<HTMLInputElement>): void {
+    const file = event.target.files?.[0] || null;
+    setPhoto(file);
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -53,102 +63,77 @@ export default function Home() {
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow-md"
       >
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">Name:</span>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">Age:</span>
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">Sex:</span>
-          <input
-            type="text"
-            value={sex}
-            onChange={(e) => setSex(e.target.value)}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">
-            Desired Yearly Salary:
-          </span>
-          <input
-            type="number"
-            value={desiredYearlySalary}
-            onChange={(e) => setDesiredYearlySalary(e.target.value)}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">Desired Hourly Wage:</span>
-          <input
-            type="number"
-            value={desiredHourlyWage}
-            onChange={(e) => setDesiredHourlyWage(e.target.value)}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">Hours per Week:</span>
-          <input
-            type="number"
-            value={hoursPerWeek}
-            onChange={(e) => setHoursPerWeek(e.target.value)}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">Skills:</span>
-          <input
-            type="text"
-            value={skills}
-            onChange={(e) => setSkills(e.target.value)}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">
-            Certifications/Education Credentials:
-          </span>
-          <input
-            type="text"
-            value={certifications}
-            onChange={(e) => setCertifications(e.target.value)}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
-        <label className="block mb-4">
-          <span className="text-gray-700 font-bold">
-            PDF Resume Attachment:
-          </span>
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleResumeUpload}
-            required
-            className="text-gray-700 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        </label>
+        <Upload
+          label="Profile Photo Upload"
+          accept="image/jpeg"
+          onChange={handlePhotoUpload}
+        />
+        <Input
+          label="Name:"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
+          label="Age:"
+          type="number"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+        <Input
+          label="Sex:"
+          type="text"
+          value={sex}
+          onChange={(e) => setSex(e.target.value)}
+        />
+        <Input
+          label="Area Code:"
+          type="number"
+          value={areaCode}
+          onChange={(e) => setAreaCode(e.target.value)}
+        />
+        <Input
+          label="Work Radius:"
+          type="number"
+          value={radius}
+          onChange={(e) => setRadius(e.target.value)}
+        />
+        <Input
+          label="Desired Yearly Salary:"
+          type="number"
+          value={desiredYearlySalary}
+          onChange={(e) => setDesiredYearlySalary(e.target.value)}
+        />
+        <Input
+          label="Desired Hourly Wage:"
+          type="number"
+          value={desiredHourlyWage}
+          onChange={(e) => setDesiredHourlyWage(e.target.value)}
+        />
+        <Input
+          label="Hours per Week:"
+          type="number"
+          value={hoursPerWeek}
+          onChange={(e) => setHoursPerWeek(e.target.value)}
+        />
+        <Input
+          label="Skills:"
+          type="text"
+          value={skills}
+          onChange={(e) => setSkills(e.target.value)}
+        />
+        <Input
+          label="Certifications/Education Credentials:"
+          type="text"
+          value={certifications}
+          onChange={(e) => setCertifications(e.target.value)}
+        />
+
+        <Upload
+          label="Resume Upload"
+          accept="application/pdf"
+          onChange={handleResumeUpload}
+        />
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
